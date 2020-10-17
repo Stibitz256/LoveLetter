@@ -1,5 +1,6 @@
 package dominio;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.TreeSet;
 
@@ -12,13 +13,21 @@ public class Mesa {
 	
 	public Mesa() {
 		this.mazo = new Mazo();
+		this.jugadores = new TreeSet<Jugador>(new Comparator() {
+			
+			@Override
+			public int compare(Object o1, Object o2) {
+				// TODO Auto-generated method stub
+			return 1;
+			}
+		});
 	}
 	
-	public void repartir() {
+	public void repartir() throws Exception {
 		Iterator<Jugador> jugadores = this.jugadores.iterator();
 		while (jugadores.hasNext()) { 
             Jugador jugador = jugadores.next();
-            jugador.tomarCarta(this.mazo.tomarCarta());
+            jugador.tomarCarta(this.mazo.obtenerCarta());
         }
 	}
 	

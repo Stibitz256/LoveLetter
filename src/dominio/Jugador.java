@@ -10,13 +10,14 @@ public class Jugador {
 	int simbolosAfectos;
 	LinkedHashSet<Carta> cartasDescartadas;
 	LinkedHashSet<Carta> cartasMano;
-
+	
 	public Jugador(String nombre) {
 		this.nombre = nombre;
 		this.protegido = false;
 		this.eliminado = false;
 		this.rendido = false;
 		this.simbolosAfectos = 0;
+		this.cartasMano = new LinkedHashSet<Carta>();
 	}
 
 	public void descartar(Carta c) {
