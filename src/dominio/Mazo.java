@@ -1,5 +1,7 @@
 package dominio;
 
-public class Mazo extends Carta {
+import java.util.TreeSet;
+
+public class Mazo {
 
 }
