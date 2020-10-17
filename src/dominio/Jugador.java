@@ -1,5 +1,6 @@
 package dominio;
 
+import java.util.LinkedHashSet;
 
 public class Jugador {
 	String nombre;
@@ -7,15 +8,15 @@ public class Jugador {
 	boolean eliminado;
 	boolean rendido;
 	int simbolosAfectos;
-	LinkedHashSet cartasDescartadas<Carta>;
-	LinkedHashSet cartasMano<Carta>;
+	LinkedHashSet<Carta> cartasDescartadas;
+	LinkedHashSet<Carta> cartasMano;
 
 	public Jugador(String nombre) {
 		this.nombre = nombre;
 	}
 
-	public Carta descartar(Carta) {
-		
+	public Carta descartar(Carta c) {
+
 	}
 
 //	public Carta tomarCarta(Carta) {
@@ -53,6 +54,5 @@ public class Jugador {
 	public LinkedHashSet<Carta> obtenerCartasDescartadas() {
 
 	}
-
 
 }
