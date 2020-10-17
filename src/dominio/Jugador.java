@@ -61,8 +61,4 @@ public class Jugador {
 		return cartasDescartadas;
 	}
 
-	public LinkedHashSet<Carta> obtenerCartasDeLaMano() {
-		return cartasMano;
-	}
-
 }

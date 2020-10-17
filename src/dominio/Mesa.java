@@ -1,5 +1,6 @@
 package dominio;
 
+import java.util.Iterator;
 import java.util.TreeSet;
 
 public class Mesa {
@@ -10,15 +11,22 @@ public class Mesa {
 	int cantSimbolosDeAfectoNecesario;
 	
 	public Mesa() {
-		
+		this.mazo = new Mazo();
 	}
 	
 	public void repartir() {
-		
+		Iterator<Jugador> jugadores = this.jugadores.iterator();
+		while (jugadores.hasNext()) { 
+            Jugador jugador = jugadores.next();
+            jugador.tomarCarta(this.mazo.tomarCarta());
+        }
 	}
 	
 	public void agregarJugador(Jugador jugador) {
-		
+		if(this.jugadores.isEmpty()) {
+			this.turno = jugador;
+		}
+		this.jugadores.add(jugador);
 	}
 	
 	public void intercambiarJugador(Jugador jugador) {
@@ -46,6 +54,8 @@ public class Mesa {
 	}
 	
 	public Carta jugarInmediatamente() {
+		//Carta carta = this.turno.obtenerCartasDeLaMano();
+		
 		return null;
 	}
 }
