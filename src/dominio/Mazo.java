@@ -37,7 +37,6 @@ public class Mazo {
 	}
 
 	public Carta obtenerCarta() throws Exception {
-		
 		Iterator<Carta> itr = cartas.iterator();  
 	
 		if(!itr.hasNext()) {
@@ -48,7 +47,6 @@ public class Mazo {
 		cartas.remove(carta);
 		
 		return carta;
-		  
 	}
 
 }

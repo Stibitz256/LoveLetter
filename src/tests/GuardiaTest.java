@@ -25,10 +25,6 @@ public class GuardiaTest {
 				
 		jugador1.tomarCarta(guardia);
 		jugador2.tomarCarta(mucama);
-		
-		
-		
-		
 	}
 
 }
