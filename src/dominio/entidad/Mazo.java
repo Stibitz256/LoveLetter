@@ -1,9 +1,11 @@
-package dominio;
+package dominio.entidad;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
+
+import dominio.excepcion.CartaNoEncontrada;
 
 public class Mazo {
 
@@ -11,7 +13,6 @@ public class Mazo {
 
 	public Mazo() {
 		cartas = new HashSet<Carta>();
-		
 		
 		cartas.add(new Mucama());
 		cartas.add(new Mucama());
@@ -36,7 +37,7 @@ public class Mazo {
 		cartas.add(new Sacerdote());
 	}
 
-	public Carta obtenerCarta() throws Exception {
+	public Carta obtenerCarta() throws CartaNoEncontrada {
 		Iterator<Carta> itr = cartas.iterator();  
 	
 		if(!itr.hasNext()) {

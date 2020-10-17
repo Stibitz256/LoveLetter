@@ -1,4 +1,4 @@
-package dominio;
+package dominio.entidad;
 
 public class Condesa extends Carta {
 	

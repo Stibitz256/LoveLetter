@@ -1,4 +1,4 @@
-package dominio;
+package dominio.entidad;
 
 public class Sacerdote extends Carta {
 	

@@ -1,4 +1,4 @@
-package dominio;
+package dominio.entidad;
 
 import java.util.LinkedHashSet;
 
@@ -10,7 +10,7 @@ public class Jugador {
 	int simbolosAfectos;
 	LinkedHashSet<Carta> cartasDescartadas;
 	LinkedHashSet<Carta> cartasMano;
-	
+
 	public Jugador(String nombre) {
 		this.nombre = nombre;
 		this.protegido = false;
@@ -18,11 +18,27 @@ public class Jugador {
 		this.rendido = false;
 		this.simbolosAfectos = 0;
 		this.cartasMano = new LinkedHashSet<Carta>();
+		this.cartasDescartadas = new LinkedHashSet<Carta>();
 	}
 
-	public void descartar(Carta c) {
-		cartasMano.remove(c);
-		cartasDescartadas.add(c);
+	public void descartar(Carta carta) {
+		cartasMano.remove(carta);
+		cartasDescartadas.add(carta);
+	}
+
+	public Carta descartar() {
+		Carta carta = cartasMano.iterator().next();
+		cartasMano.remove(carta);
+		cartasDescartadas.add(carta);
+
+		return carta;
+	}
+	
+	public Carta darCarta() {
+		Carta carta = cartasMano.iterator().next();
+		cartasMano.remove(carta);
+		
+		return carta;
 	}
 
 	public Carta tomarCarta(Carta c) {
@@ -53,13 +69,17 @@ public class Jugador {
 	public boolean estaRendido() {
 		return this.rendido;
 	}
-	
-	public LinkedHashSet<Carta> obtenerCartasDeMano() {
-		return this.cartasMano;
+
+	public boolean estaProtegido() {
+		return this.protegido;
 	}
-	
+
 	public int obtenerSimbolosAfectos() {
 		return simbolosAfectos;
+	}
+	
+	public LinkedHashSet<Carta> obtenerCartasDeLaMano() {
+		return this.cartasMano;
 	}
 
 	public LinkedHashSet<Carta> obtenerCartasDescartadas() {

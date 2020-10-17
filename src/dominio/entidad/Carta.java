@@ -1,4 +1,4 @@
-package dominio;
+package dominio.entidad;
 
 abstract public class Carta {
 	private String nombre;

@@ -1,4 +1,4 @@
-package dominio;
+package dominio.entidad;
 
 public class Mucama extends Carta {
 	private static final String nombre = "Mucama";

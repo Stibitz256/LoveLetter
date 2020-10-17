@@ -1,4 +1,4 @@
-package dominio;
+package dominio.excepcion;
 
 public class CartaNoEncontrada extends Exception{
 	
