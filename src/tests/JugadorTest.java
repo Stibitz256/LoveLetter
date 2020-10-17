@@ -4,11 +4,15 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import dominio.Jugador;
+
 public class JugadorTest {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		Jugador jugador = new Jugador("Cacho");
+		
+		
 	}
 
 }

@@ -2,7 +2,13 @@ package dominio;
 
 public class Guardia extends Carta{
 	
+	private static final String nombre = "Guardia";
+	private static final String efecto = "nombrarCarta";
+	private static final int fuerza = 1;
+	
 	public Guardia() {
-		super("Guardia",1,"nombrarCarta");
+		super(nombre, fuerza, efecto);
 	}
+	
+	
 }
