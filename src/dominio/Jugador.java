@@ -13,10 +13,15 @@ public class Jugador {
 
 	public Jugador(String nombre) {
 		this.nombre = nombre;
+		this.protegido = false;
+		this.eliminado = false;
+		this.rendido = false;
+		this.simbolosAfectos = 0;
 	}
 
-	public Carta descartar(Carta c) {
-
+	public void descartar(Carta c) {
+		cartasMano.remove(c);
+		cartasDescartadas.add(c);
 	}
 
 //	public Carta tomarCarta(Carta) {
@@ -24,35 +29,35 @@ public class Jugador {
 //	}
 
 	public void eliminar() {
-
+		this.eliminado = true;
 	}
 
 	public void proteger() {
-
+		this.protegido = true;
 	}
 
 	public void desproteger() {
-
+		this.protegido = false;
 	}
 
 	public void rendirse() {
-
+		this.rendido = true;
 	}
 
 	public boolean estaEliminado() {
-
+		return this.eliminado;
 	}
 
 	public boolean estaRendido() {
-
+		return this.rendido;
 	}
 
 	public int obtenerSimbolosAfectos() {
-
+		return simbolosAfectos;
 	}
 
 	public LinkedHashSet<Carta> obtenerCartasDescartadas() {
-
+		return cartasDescartadas;
 	}
 
 }
