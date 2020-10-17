@@ -1,6 +1,9 @@
 package dominio.entidad;
 
+import java.util.Iterator;
 import java.util.LinkedHashSet;
+
+import dominio.excepcion.CartaNoEncontrada;
 
 public class Jugador {
 	String nombre;
@@ -33,17 +36,18 @@ public class Jugador {
 
 		return carta;
 	}
-	
+
 	public Carta darCarta() {
 		Carta carta = cartasMano.iterator().next();
 		cartasMano.remove(carta);
-		
+
 		return carta;
 	}
 
-	public Carta tomarCarta(Carta c) {
-		this.cartasMano.add(c);
-		return c;
+	public Carta tomarCarta(Carta carta) {
+		this.cartasMano.add(carta);
+
+		return carta;
 	}
 
 	public void eliminar() {
@@ -77,13 +81,35 @@ public class Jugador {
 	public int obtenerSimbolosAfectos() {
 		return simbolosAfectos;
 	}
-	
+
 	public LinkedHashSet<Carta> obtenerCartasDeLaMano() {
 		return this.cartasMano;
 	}
 
 	public LinkedHashSet<Carta> obtenerCartasDescartadas() {
 		return cartasDescartadas;
+	}
+	
+	public Carta obtenerPrimeraCartaDeLaMano() throws CartaNoEncontrada {
+		if(this.cartasMano.isEmpty()) {
+			throw new CartaNoEncontrada();
+		}
+		
+		return this.cartasMano.iterator().next();
+	}
+	
+	public Carta obtenerUltimaCartaDescartada() throws CartaNoEncontrada {
+		if(this.cartasDescartadas.isEmpty()) {
+			throw new CartaNoEncontrada();
+		}
+		
+		Iterator<Carta> cartasDescartadas = this.cartasDescartadas.iterator();
+		Carta carta = null;
+		while (cartasDescartadas.hasNext()) {
+			carta = cartasDescartadas.next();
+		}
+		
+		return carta;
 	}
 
 }

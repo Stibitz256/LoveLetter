@@ -1,12 +1,35 @@
 package dominio.entidad;
 
+import dominio.excepcion.JugadorProtegido;
+
 public class Baron extends Carta {
-	
+
 	private static final String nombre = "Baron";
-	private static final String efecto = "mostrarseCartas";
 	private static final int fuerza = 3;
-	
+
 	public Baron() {
-		super(nombre, fuerza, efecto);
+		super(nombre, fuerza);
+	}
+
+	@Override
+	public Carta descartar(Jugador jugador, Jugador jugadorTurno) throws JugadorProtegido {
+		if (jugador.estaProtegido()) {
+			throw new JugadorProtegido();
+		}
+
+		Carta carta = jugador.obtenerCartasDeLaMano().iterator().next();
+		Carta cartaTurnoJugador = jugadorTurno.obtenerCartasDeLaMano().iterator().next();
+
+		if (cartaTurnoJugador.getFuerza() > carta.getFuerza()) {
+			jugador.eliminar();
+
+			return cartaTurnoJugador;
+		}
+		
+		if (cartaTurnoJugador.getFuerza() < carta.getFuerza()) {
+			return carta;
+		}
+
+		return (Carta) new Object();
 	}
 }
