@@ -47,7 +47,15 @@ public class Mesa {
 	}
 	
 	public boolean nombrarCarta(Jugador jugador, Carta carta) {
-		return false;
+		 Iterator<Carta> cartas = jugador.obtenerCartasDeMano().iterator();
+		 while(cartas.hasNext()) {
+			 Carta cartaJugador = cartas.next();
+			 if(cartaJugador.getClass() == carta.getClass()) {
+				 return true;
+			 }
+		 }
+		 
+		 return false;
 	}
 	
 	public boolean verCartas(Jugador jugador, Carta carta) {

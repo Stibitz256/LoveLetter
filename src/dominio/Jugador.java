@@ -53,7 +53,11 @@ public class Jugador {
 	public boolean estaRendido() {
 		return this.rendido;
 	}
-
+	
+	public LinkedHashSet<Carta> obtenerCartasDeMano() {
+		return this.cartasMano;
+	}
+	
 	public int obtenerSimbolosAfectos() {
 		return simbolosAfectos;
 	}

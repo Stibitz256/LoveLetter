@@ -8,6 +8,7 @@ import dominio.Guardia;
 import dominio.Jugador;
 import dominio.Mesa;
 import dominio.Mucama;
+import dominio.Principe;
 
 public class GuardiaTest {
 
@@ -26,13 +27,9 @@ public class GuardiaTest {
 		jugador1.tomarCarta(guardia);
 		jugador2.tomarCarta(mucama);
 
-//		mesa.nombrarCarta(jugador2, mucama);
-
-		assertFalse(mesa.nombrarCarta(jugador2, mucama));
-
+		assertTrue(mesa.nombrarCarta(jugador2, mucama));
 	}
 
-	// En el lote de pruebas se llama guardiaAdivinaMal
 	@Test
 	public void guardiaNoAdivina() {
 		Mesa mesa = new Mesa();
@@ -44,11 +41,11 @@ public class GuardiaTest {
 
 		Guardia guardia = new Guardia();
 		Mucama mucama = new Mucama();
+		Principe principe = new Principe();
 
 		jugador1.tomarCarta(guardia);
 		jugador2.tomarCarta(mucama);
 
-		assertFalse(mesa.nombrarCarta(jugador2, mucama));
-
+		assertFalse(mesa.nombrarCarta(jugador2, principe));
 	}
 }
