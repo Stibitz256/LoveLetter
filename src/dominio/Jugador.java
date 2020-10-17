@@ -24,9 +24,10 @@ public class Jugador {
 		cartasDescartadas.add(c);
 	}
 
-//	public Carta tomarCarta(Carta) {
-//		
-//	}
+	public Carta tomarCarta(Carta c) {
+		this.cartasMano.add(c);
+		return c;
+	}
 
 	public void eliminar() {
 		this.eliminado = true;
