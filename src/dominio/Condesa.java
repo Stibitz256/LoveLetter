@@ -2,8 +2,13 @@ package dominio;
 
 public class Condesa extends Carta {
 	
-	public Condesa() {
-		super("Condesa",7,"descartar si tenes Rey o Principe");
-	}
+	private static final String nombre = "Condesa";
+	private static final String efecto = "jugarInmediatamente";
+	private static final int fuerza = 7;
 	
+	public Condesa() {
+		super(nombre, fuerza, efecto);
+		// TODO Auto-generated constructor stub
+
+	}
 }
