@@ -1,7 +1,8 @@
 package dominio;
 
 public class Guardia extends Carta{
-	private Guardia() {
+	
+	public Guardia() {
 		super("Guardia",1,"nombrarCarta");
 	}
 }
