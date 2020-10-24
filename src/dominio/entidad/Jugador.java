@@ -23,6 +23,27 @@ public class Jugador {
 		this.cartasMano = new LinkedHashSet<Carta>();
 		this.cartasDescartadas = new LinkedHashSet<Carta>();
 	}
+	
+	public int obtenerFuerza() {
+		// TODO Auto-generated method stub
+		int fuerza=0;
+		Iterator<Carta>	listaCartas= this.cartasMano.iterator();
+		while(listaCartas.hasNext()) {
+			Carta carta= listaCartas.next();
+			if(carta.getFuerza()>fuerza)
+				fuerza= carta.getFuerza();
+		}
+		return fuerza;
+	}
+	public int obtenerCantCartasDescartadas() {
+		// TODO Auto-generated method stub
+		int cant=0;
+		Iterator<Carta>	listaCartas= this.cartasDescartadas.iterator();
+		while(listaCartas.hasNext()) {
+			cant++;
+		}
+		return cant;
+	}
 
 	public void descartar(Carta carta) {
 		cartasMano.remove(carta);
@@ -110,6 +131,13 @@ public class Jugador {
 		}
 		
 		return carta;
+	}
+
+	@Override
+	public String toString() {
+		return "Jugador [nombre=" + nombre + ", protegido=" + protegido + ", eliminado=" + eliminado + ", rendido="
+				+ rendido + ", simbolosAfectos=" + simbolosAfectos + ", cartasDescartadas=" + cartasDescartadas
+				+ ", cartasMano=" + cartasMano + "]";
 	}
 
 }
