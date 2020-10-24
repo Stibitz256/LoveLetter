@@ -9,50 +9,76 @@ public class Ronda {
 	private Jugador turno;
 	Iterator<Jugador> jugadores;
 
-	public Ronda(TreeSet<Jugador> jugadores){
-		this.jugadores= jugadores.iterator();
+	public Ronda(TreeSet<Jugador> jugadores) {
+		this.jugadores = jugadores.iterator();
+		turno = jugadores.first();
 	}
 
-	
-	public void ganadorRonda(Jugador jugador) {
-			jugador.simbolosAfectos++;
-			System.out.println(jugador.toString());
+	public Jugador ganadorRonda() {
+		this.turno.incrementarSimbolosDeAfecto();
+		// System.out.println(jugador.toString());
+		return this.turno;
 
+	}
+
+	public Jugador finalizarRonda() { // se termina la ronda bruscamente y devuelve al ganador
+		return ganadorRonda();
 	}
 
 	public void repartirMazo() throws Exception {
 		Iterator<Jugador> jugadores = this.jugadores;
+		cartaApartada = this.mazo.obtenerCarta();
 		while (jugadores.hasNext()) {
 			Jugador jugador = jugadores.next();
-			jugador.tomarCarta(this.mazo.obtenerCarta());			
+			jugador.tomarCarta(this.mazo.obtenerCarta());
 		}
-	}
-
-	public void siguienteTurno() {
-		
 	}
 
 	public Jugador siguienteJugadorEnLaRonda() {
-		return null;
-	}
-	
-	public void compararFuerzasYDescartes() {
+		Iterator<Jugador> principio = this.jugadores;
 		Iterator<Jugador> jugadores = this.jugadores;
-		Jugador ganador= jugadores.next();
+		boolean iterador = true;
+
+		Jugador actual = jugadores.next();
+		while (actual != this.turno) {
+			actual = jugadores.next();
+		}
+
+		while (iterador) {
+			if (!jugadores.hasNext()) {
+				jugadores = principio;
+			}
+			Jugador jugador = jugadores.next();
+			if (!jugador.estaEliminado()) {
+				actual = jugador;
+				iterador = false;
+			}
+		}
+		return actual;
+	}
+
+	public Jugador compararFuerzasYDescartes() {
+		Iterator<Jugador> jugadores = this.jugadores;
+		Jugador ganador = jugadores.next();
+
+		while (jugadores.hasNext() && ganador.estaEliminado()) {
+			ganador = jugadores.next();
+		}
 		while (jugadores.hasNext()) {
 			Jugador jugador = jugadores.next();
-			int comp= jugador.obtenerFuerza()-ganador.obtenerFuerza();
-			if(comp>0) {
-				ganador= jugador;
-			}
-			else {
-				if(comp==0) {
-					if(jugador.obtenerCantCartasDescartadas()>ganador.obtenerCantCartasDescartadas())
-						ganador= jugador;
+			if (!jugador.estaEliminado()) {
+
+				int comp = jugador.obtenerFuerza() - ganador.obtenerFuerza();
+				if (comp > 0) {
+					ganador = jugador;
+				} else {
+					if (comp == 0) {
+						if (jugador.obtenerCantCartasDescartadas() > ganador.obtenerCantCartasDescartadas())
+							ganador = jugador;
+					}
 				}
 			}
 		}
-		ganadorRonda(ganador);
+		return ganador;
 	}
-
 }

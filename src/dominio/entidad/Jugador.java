@@ -35,6 +35,11 @@ public class Jugador {
 		}
 		return fuerza;
 	}
+	
+	public int incrementarSimbolosDeAfecto() {
+		return ++simbolosAfectos;
+	}
+	
 	public int obtenerCantCartasDescartadas() {
 		// TODO Auto-generated method stub
 		int cant=0;
