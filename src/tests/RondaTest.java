@@ -1,7 +1,5 @@
 package tests;
 
-import static org.junit.Assert.*;
-
 import java.util.Comparator;
 import java.util.TreeSet;
 
@@ -15,15 +13,15 @@ public class RondaTest {
 	@Test
 	public void testFinalizarRonda() {
 		
-		TreeSet<Jugador> jugadores= new TreeSet<>(new Comparator() {
+		TreeSet<Jugador> jugadores= new TreeSet<Jugador>(new Comparator<Object>() {
 			@Override
 			public int compare(Object o1, Object o2) {
 				// TODO Auto-generated method stub
-				return 0;
+				return 1;
 			}
 		});
-		jugadores.add(new Jugador("pablo1"));
-		jugadores.add(new Jugador("abbbbb"));
+		jugadores.add(new Jugador("pablo"));
+		jugadores.add(new Jugador("kevin"));
 		Ronda juego= new Ronda(jugadores);
 		
 		Jugador ganador = juego.finalizarRonda();
