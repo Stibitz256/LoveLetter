@@ -12,7 +12,6 @@ abstract public class Carta {
 	private int fuerza;
 
 	public Carta(String nombre, int fuerza) {
-		super();
 		this.nombre = nombre;
 		this.fuerza = fuerza;
 	}

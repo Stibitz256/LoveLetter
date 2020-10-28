@@ -23,9 +23,8 @@ public class Ronda {
 		return this.turno;
 	}
 
-	// se termina la ronda bruscamente y devuelve al ganador
 	public Jugador finalizarRonda() {
-		return ganadorRonda();
+		return this.ganadorRonda();
 	}
 
 	public void repartirMazo() throws CartaNoEncontrada {
