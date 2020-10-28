@@ -1,17 +1,17 @@
 package dominio.entidad;
 
+import java.util.Iterator;
 import java.util.TreeSet;
 
-import dominio.excepcion.JugadorProtegido;
-
 public class Partida {
-	private Mazo mazo = new Mazo();
 	private TreeSet<Jugador> jugadores;
 	private int cantSimbolosDeAfectoNecesarios;
+	private Ronda ronda;
 
 	public Partida(TreeSet<Jugador> jugadores, int cantSimbolosDeAfectoNecesarios) {
 		this.jugadores = jugadores;
 		this.cantSimbolosDeAfectoNecesarios = cantSimbolosDeAfectoNecesarios;
+		this.ronda = new Ronda(jugadores);
 	}
 
 	@Override
@@ -20,22 +20,30 @@ public class Partida {
 				+ "]";
 	}
 
-	public void siguienteRonda() {
+	public Ronda siguienteRonda() {
+		if (this.ganadorPartida().obtenerSimbolosAfectos() < this.cantSimbolosDeAfectoNecesarios) {
+			this.ronda = new Ronda(this.jugadores);
+		}
 
+		return this.ronda;
 	}
 
 	public Jugador ganadorPartida() {
-		return this.jugadores.first();
+		Iterator<Jugador> jugadores = this.jugadores.iterator();
+		Jugador ganador = jugadores.next();
+		while (jugadores.hasNext()) {
+			Jugador jugador = jugadores.next();
+			if (jugador.obtenerSimbolosAfectos() > ganador.obtenerSimbolosAfectos()) {
+				ganador = jugador;
+			}
+		}
+
+		return ganador;
 	}
 
 	public Jugador finalizarPartida() {
-		Jugador ganador;
-		Ronda ronda= new Ronda(this.jugadores);
-		ganador= ronda.finalizarRonda();
-		while(ganador.obtenerSimbolosAfectos()!=this.cantSimbolosDeAfectoNecesarios) {
-			ronda= new Ronda(this.jugadores);
-			ganador= ronda.finalizarRonda();
-		}
-		return ganador;
+		this.ronda.finalizarRonda();
+
+		return this.ganadorPartida();
 	}
 }

@@ -23,30 +23,30 @@ public class Jugador {
 		this.cartasMano = new LinkedHashSet<Carta>();
 		this.cartasDescartadas = new LinkedHashSet<Carta>();
 	}
-	
+
 	public int obtenerFuerza() {
-		// TODO Auto-generated method stub
-		int fuerza=0;
-		Iterator<Carta>	listaCartas= this.cartasMano.iterator();
-		while(listaCartas.hasNext()) {
-			Carta carta= listaCartas.next();
-			if(carta.getFuerza()>fuerza)
-				fuerza= carta.getFuerza();
+		int fuerza = 0;
+		Iterator<Carta> listaCartas = this.cartasMano.iterator();
+		while (listaCartas.hasNext()) {
+			Carta carta = listaCartas.next();
+			if (carta.getFuerza() > fuerza)
+				fuerza = carta.getFuerza();
 		}
+		
 		return fuerza;
 	}
-	
+
 	public int incrementarSimbolosDeAfecto() {
 		return ++simbolosAfectos;
 	}
-	
+
 	public int obtenerCantCartasDescartadas() {
-		// TODO Auto-generated method stub
-		int cant=0;
-		Iterator<Carta>	listaCartas= this.cartasDescartadas.iterator();
-		while(listaCartas.hasNext()) {
+		int cant = 0;
+		Iterator<Carta> listaCartas = this.cartasDescartadas.iterator();
+		while (listaCartas.hasNext()) {
 			cant++;
 		}
+		
 		return cant;
 	}
 
@@ -115,26 +115,26 @@ public class Jugador {
 	public LinkedHashSet<Carta> obtenerCartasDescartadas() {
 		return cartasDescartadas;
 	}
-	
+
 	public Carta obtenerPrimeraCartaDeLaMano() throws CartaNoEncontrada {
-		if(this.cartasMano.isEmpty()) {
+		if (this.cartasMano.isEmpty()) {
 			throw new CartaNoEncontrada();
 		}
-		
+
 		return this.cartasMano.iterator().next();
 	}
-	
+
 	public Carta obtenerUltimaCartaDescartada() throws CartaNoEncontrada {
-		if(this.cartasDescartadas.isEmpty()) {
+		if (this.cartasDescartadas.isEmpty()) {
 			throw new CartaNoEncontrada();
 		}
-		
+
 		Iterator<Carta> cartasDescartadas = this.cartasDescartadas.iterator();
 		Carta carta = null;
 		while (cartasDescartadas.hasNext()) {
 			carta = cartasDescartadas.next();
 		}
-		
+
 		return carta;
 	}
 

@@ -3,8 +3,10 @@ package dominio.entidad;
 import java.util.Iterator;
 import java.util.TreeSet;
 
+import dominio.excepcion.CartaNoEncontrada;
+
 public class Ronda {
-	private Mazo mazo = new Mazo();
+	private Mazo mazo;
 	private Carta cartaApartada;
 	private Jugador turno;
 	Iterator<Jugador> jugadores;
@@ -12,22 +14,23 @@ public class Ronda {
 	public Ronda(TreeSet<Jugador> jugadores) {
 		this.jugadores = jugadores.iterator();
 		turno = jugadores.first();
+		this.mazo = new Mazo();
 	}
 
 	public Jugador ganadorRonda() {
 		this.turno.incrementarSimbolosDeAfecto();
-		// System.out.println(jugador.toString());
-		return this.turno;
 
+		return this.turno;
 	}
 
-	public Jugador finalizarRonda() { // se termina la ronda bruscamente y devuelve al ganador
+	// se termina la ronda bruscamente y devuelve al ganador
+	public Jugador finalizarRonda() {
 		return ganadorRonda();
 	}
 
-	public void repartirMazo() throws Exception {
+	public void repartirMazo() throws CartaNoEncontrada {
 		Iterator<Jugador> jugadores = this.jugadores;
-		cartaApartada = this.mazo.obtenerCarta();
+		this.cartaApartada = this.mazo.obtenerCarta();
 		while (jugadores.hasNext()) {
 			Jugador jugador = jugadores.next();
 			jugador.tomarCarta(this.mazo.obtenerCarta());
@@ -54,6 +57,7 @@ public class Ronda {
 				iterador = false;
 			}
 		}
+
 		return actual;
 	}
 
@@ -79,6 +83,7 @@ public class Ronda {
 				}
 			}
 		}
+
 		return ganador;
 	}
 }
