@@ -1,32 +1,29 @@
 package tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import dominio.entidad.Carta;
 import dominio.entidad.Guardia;
 import dominio.entidad.Jugador;
-import dominio.entidad.Mesa;
-import dominio.entidad.Mucama;
+import dominio.entidad.Mazo;
 import dominio.entidad.Princesa;
 import dominio.entidad.Principe;
-import dominio.entidad.Sacerdote;
 import dominio.excepcion.CartaNoEncontrada;
+import dominio.excepcion.CondesaEnMano;
+import dominio.excepcion.DescartarParametrosIncorrectos;
 import dominio.excepcion.JugadorProtegido;
 
 public class PrincipeTest {
 
 	@Test(expected=JugadorProtegido.class)
-	public void descartarTomarCarta() throws JugadorProtegido, CartaNoEncontrada {
-		Mesa mesa = new Mesa();
+	public void descartarTomarCarta() throws JugadorProtegido, CartaNoEncontrada, CondesaEnMano {
 		Jugador jugador1 = new Jugador("Wilson");
 		Jugador jugador2 = new Jugador("Marta");
 		jugador2.proteger();
-
-		mesa.agregarJugador(jugador1);
-		mesa.agregarJugador(jugador2);
 
 		Principe principe = new Principe();
 		Principe principe2 = new Principe();
@@ -34,56 +31,54 @@ public class PrincipeTest {
 		jugador1.tomarCarta(principe);
 		jugador2.tomarCarta(principe2);
 
-		mesa.descartarTomarCarta(jugador2);
+		Mazo mazo = new Mazo();
+		Carta cartaApartada = mazo.obtenerCarta();
+		principe.descartar(jugador2, mazo, cartaApartada);
 	}
 	
 	@Test
-	public void descartarTomarCartaASiMismo() throws JugadorProtegido, CartaNoEncontrada {
-		Mesa mesa = new Mesa();
+	public void descartarTomarCartaASiMismo() throws JugadorProtegido, CartaNoEncontrada, DescartarParametrosIncorrectos, CondesaEnMano {
+		Principe principe = new Principe();
 		Jugador jugador1 = new Jugador("Wilson");
-
-		mesa.agregarJugador(jugador1);
-		
-		Mucama principe = new Mucama();
-		
 		jugador1.tomarCarta(principe);
+		Mazo mazo = new Mazo();
+		Carta cartaApartada = mazo.obtenerCarta();
 		
-		mesa.descartarTomarCarta(jugador1);
+		principe.descartar(jugador1, mazo, cartaApartada);
 		
 		assertEquals(1, jugador1.obtenerCartasDeLaMano().size());
 	}
 	
 	@Test
-	public void descartarTomarCartaPrincesa() throws JugadorProtegido, CartaNoEncontrada {
-		Mesa mesa = new Mesa();
-		Jugador jugador1 = new Jugador("Wilson");
-
-		mesa.agregarJugador(jugador1);
-		
+	public void descartarTomarCartaPrincesa() throws JugadorProtegido, CartaNoEncontrada, CondesaEnMano {
+		Principe principe = new Principe();
 		Princesa princesa = new Princesa();
 		
+		Jugador jugador1 = new Jugador("Wilson");
 		jugador1.tomarCarta(princesa);
 		
-		mesa.descartarTomarCarta(jugador1);
+		Mazo mazo = new Mazo();
+		Carta cartaApartada = mazo.obtenerCarta();
+		
+		principe.descartar(jugador1, mazo, cartaApartada);
 		
 		assertTrue(jugador1.estaEliminado());
 		assertEquals(0, jugador1.obtenerCartasDeLaMano().size());
 	}
 	
 	@Test
-	public void descartarTomarCartaDelApartado() throws JugadorProtegido, CartaNoEncontrada {
-		Mesa mesa = new Mesa();
-		
+	public void descartarTomarCartaDelApartado() throws JugadorProtegido, CartaNoEncontrada, CondesaEnMano {
 		Jugador jugador1 = new Jugador("Wilson");
-
-		mesa.agregarJugador(jugador1);
+		Principe principe = new Principe();
 		
 		Guardia guardia = new Guardia();
 		
 		jugador1.tomarCarta(guardia);
 		
-		mesa.descartarTomarCarta(jugador1);
+		Mazo mazo = new Mazo();
+		Carta cartaApartada = mazo.obtenerCarta();
+		principe.descartar(jugador1, mazo, cartaApartada);
 		
-		assertNotEquals(guardia, jugador1.darCarta());
+		assertNotEquals(cartaApartada, jugador1.darCarta());
 	}
 }
