@@ -19,13 +19,6 @@ public class Condesa extends Carta {
 	@Override
 	public Carta descartar(Jugador jugador)
 			throws DescartarParametrosIncorrectos, CartaNoValida, JugadorProtegido, CartaNoEncontrada {
-		Iterator<Carta> cartas = jugador.obtenerCartasDeLaMano().iterator();
-		while (cartas.hasNext()) {
-			Carta carta = cartas.next();
-			if (carta.getClass() == Principe.class || carta.getClass() == Rey.class) {
-				carta.descartar(jugador);
-			}
-		}
 
 		Carta carta = jugador.obtenerUltimaCartaDescartada();
 		if (carta.getClass() == Condesa.class) {

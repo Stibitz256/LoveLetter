@@ -1,6 +1,9 @@
 package dominio.entidad;
 
+import java.util.Iterator;
+
 import dominio.excepcion.CartaNoEncontrada;
+import dominio.excepcion.CondesaEnMano;
 import dominio.excepcion.JugadorProtegido;
 
 public class Principe extends Carta {
@@ -13,7 +16,14 @@ public class Principe extends Carta {
 	}
 
 	@Override
-	public Carta descartar(Jugador jugador, Mazo mazo, Carta cartaApartada) throws JugadorProtegido {
+	public Carta descartar(Jugador jugador, Mazo mazo, Carta cartaApartada) throws JugadorProtegido, CondesaEnMano {
+		Iterator<Carta> cartas = jugador.obtenerCartasDeLaMano().iterator();
+		while (cartas.hasNext()) {
+			Carta carta = cartas.next();
+			if (carta.getClass() == Condesa.class) {
+				throw new CondesaEnMano();
+			}
+		}
 		if (jugador.estaProtegido()) {
 			throw new JugadorProtegido();
 		}
@@ -24,9 +34,9 @@ public class Principe extends Carta {
 
 			return cartaDescartada;
 		}
-		
+
 		Carta carta = null;
-		
+
 		try {
 			carta = jugador.tomarCarta(mazo.obtenerCarta());
 		} catch (CartaNoEncontrada exception) {

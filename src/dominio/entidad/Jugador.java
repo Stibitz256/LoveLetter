@@ -32,7 +32,7 @@ public class Jugador implements Comparable<Jugador> {
 			if (carta.getFuerza() > fuerza)
 				fuerza = carta.getFuerza();
 		}
-		
+
 		return fuerza;
 	}
 
@@ -46,7 +46,7 @@ public class Jugador implements Comparable<Jugador> {
 		while (listaCartas.hasNext()) {
 			cant++;
 		}
-		
+
 		return cant;
 	}
 
