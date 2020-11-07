@@ -4,6 +4,7 @@ import java.util.Enumeration;
 
 import dominio.excepcion.CartaNoEncontrada;
 import dominio.excepcion.CartaNoValida;
+import dominio.excepcion.CondesaEnMano;
 import dominio.excepcion.DescartarParametrosIncorrectos;
 import dominio.excepcion.JugadorProtegido;
 
@@ -22,12 +23,12 @@ abstract public class Carta {
 	}
 
 	public boolean descartar(Jugador jugador, Enumeration<Carta> Carta) throws JugadorProtegido, CartaNoValida,
-			DescartarParametrosIncorrectos, InstantiationException, IllegalAccessException {
+			DescartarParametrosIncorrectos, InstantiationException, IllegalAccessException, CondesaEnMano {
 		throw new DescartarParametrosIncorrectos();
 	}
 
 	public Carta descartar(Jugador jugador, Jugador jugadorTurno)
-			throws JugadorProtegido, DescartarParametrosIncorrectos {
+			throws JugadorProtegido, DescartarParametrosIncorrectos, CondesaEnMano {
 		throw new DescartarParametrosIncorrectos();
 	}
 
@@ -36,7 +37,7 @@ abstract public class Carta {
 	}
 
 	public Carta descartar(Jugador jugador, Mazo mazo, Carta cartaApartada)
-			throws JugadorProtegido, DescartarParametrosIncorrectos {
+			throws JugadorProtegido, DescartarParametrosIncorrectos, CondesaEnMano {
 		throw new DescartarParametrosIncorrectos();
 	}
 
