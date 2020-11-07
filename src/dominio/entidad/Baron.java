@@ -13,7 +13,7 @@ public class Baron extends Carta {
 
 	@Override
 	public Carta descartar(Jugador jugador, Jugador jugadorTurno) throws JugadorProtegido {
-		if (jugador.estaProtegido()) {
+		if (jugadorTurno.estaProtegido()) {
 			throw new JugadorProtegido();
 		}
 
@@ -27,9 +27,11 @@ public class Baron extends Carta {
 		}
 		
 		if (cartaTurnoJugador.getFuerza() < carta.getFuerza()) {
+			jugadorTurno.eliminar();
+			
 			return carta;
 		}
 
-		return (Carta) new Object();
+		return null;
 	}
 }
