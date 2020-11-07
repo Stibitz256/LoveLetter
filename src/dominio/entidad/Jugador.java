@@ -5,7 +5,7 @@ import java.util.LinkedHashSet;
 
 import dominio.excepcion.CartaNoEncontrada;
 
-public class Jugador {
+public class Jugador implements Comparable<Jugador> {
 	String nombre;
 	boolean protegido;
 	boolean eliminado;
@@ -145,4 +145,8 @@ public class Jugador {
 				+ ", cartasMano=" + cartasMano + "]";
 	}
 
+	@Override
+	public int compareTo(Jugador otroJugador) {
+		return 0;
+	}
 }
