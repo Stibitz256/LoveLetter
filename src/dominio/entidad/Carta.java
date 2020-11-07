@@ -28,7 +28,7 @@ abstract public class Carta {
 	}
 
 	public Carta descartar(Jugador jugador, Jugador jugadorTurno)
-			throws JugadorProtegido, DescartarParametrosIncorrectos, CondesaEnMano {
+			throws JugadorProtegido, DescartarParametrosIncorrectos, CondesaEnMano, CartaNoEncontrada {
 		throw new DescartarParametrosIncorrectos();
 	}
 
@@ -37,7 +37,7 @@ abstract public class Carta {
 	}
 
 	public Carta descartar(Jugador jugador, Mazo mazo, Carta cartaApartada)
-			throws JugadorProtegido, DescartarParametrosIncorrectos, CondesaEnMano {
+			throws JugadorProtegido, DescartarParametrosIncorrectos, CondesaEnMano, CartaNoEncontrada {
 		throw new DescartarParametrosIncorrectos();
 	}
 

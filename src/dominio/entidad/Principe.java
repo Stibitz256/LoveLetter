@@ -16,11 +16,13 @@ public class Principe extends Carta {
 	}
 
 	@Override
-	public Carta descartar(Jugador jugador, Mazo mazo, Carta cartaApartada) throws JugadorProtegido, CondesaEnMano {
+	public Carta descartar(Jugador jugador, Mazo mazo, Carta cartaApartada) throws JugadorProtegido, CondesaEnMano, CartaNoEncontrada {
 		Iterator<Carta> cartas = jugador.obtenerCartasDeLaMano().iterator();
 		while (cartas.hasNext()) {
 			Carta carta = cartas.next();
 			if (carta.getClass() == Condesa.class) {
+				Principe cartaDescartada = (Principe) jugador.eliminarUltimaCartaDescartada();
+				jugador.tomarCarta(cartaDescartada);
 				throw new CondesaEnMano();
 			}
 		}
