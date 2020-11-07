@@ -16,17 +16,17 @@ public class Guardia extends Carta {
 	}
 
 	@Override
-	public boolean descartar(Jugador jugador, Enumeration<Carta> carta) throws JugadorProtegido, CartaNoValida {
+	public boolean descartar(Jugador jugador, EnumerationCarta carta) throws JugadorProtegido, CartaNoValida {
 		if (jugador.estaProtegido()) {
 			throw new JugadorProtegido();
 		}
-		if (carta.getClass() == Guardia.class) {
+		if (carta == EnumerationCarta.Guardia) {
 			throw new CartaNoValida();
 		}
 		Iterator<Carta> cartas = jugador.obtenerCartasDeLaMano().iterator();
 		while (cartas.hasNext()) {
 			Carta cartaJugador = cartas.next();
-			if (cartaJugador.getClass() == carta.getClass()) {
+			if (cartaJugador.getNombre() == carta.name()) {
 				return true;
 			}
 		}

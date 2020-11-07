@@ -22,7 +22,7 @@ abstract public class Carta {
 		throw new DescartarParametrosIncorrectos();
 	}
 
-	public boolean descartar(Jugador jugador, Enumeration<Carta> Carta) throws JugadorProtegido, CartaNoValida,
+	public boolean descartar(Jugador jugador, EnumerationCarta Carta) throws JugadorProtegido, CartaNoValida,
 			DescartarParametrosIncorrectos, InstantiationException, IllegalAccessException, CondesaEnMano {
 		throw new DescartarParametrosIncorrectos();
 	}

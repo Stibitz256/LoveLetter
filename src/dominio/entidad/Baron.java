@@ -13,7 +13,7 @@ public class Baron extends Carta {
 
 	@Override
 	public Carta descartar(Jugador jugador, Jugador jugadorTurno) throws JugadorProtegido {
-		if (jugadorTurno.estaProtegido()) {
+		if (jugador.estaProtegido()) {
 			throw new JugadorProtegido();
 		}
 

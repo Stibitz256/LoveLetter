@@ -2,11 +2,14 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.util.Enumeration;
+
 import org.junit.Test;
 
+import dominio.entidad.Carta;
+import dominio.entidad.EnumerationCarta;
 import dominio.entidad.Guardia;
 import dominio.entidad.Jugador;
-import dominio.entidad.Mesa;
 import dominio.entidad.Mucama;
 import dominio.entidad.Principe;
 import dominio.excepcion.CartaNoEncontrada;
@@ -17,12 +20,8 @@ public class GuardiaTest {
 
 	@Test
 	public void guardiaAdivinaCorrecto() throws CartaNoValida, JugadorProtegido, CartaNoEncontrada {
-		Mesa mesa = new Mesa();
 		Jugador jugador1 = new Jugador("Wilson");
 		Jugador jugador2 = new Jugador("Marta");
-
-		mesa.agregarJugador(jugador1);
-		mesa.agregarJugador(jugador2);
 
 		Guardia guardia = new Guardia();
 		Mucama mucama = new Mucama();
@@ -30,17 +29,15 @@ public class GuardiaTest {
 		jugador1.tomarCarta(guardia);
 		jugador2.tomarCarta(mucama);
 
-		assertTrue(mesa.nombrarCarta(jugador2, mucama));
+		boolean esAdivinado = guardia.descartar(jugador2, EnumerationCarta.Mucama);
+		
+		assertTrue(esAdivinado);
 	}
 
 	@Test
 	public void guardiaNoAdivina() throws CartaNoValida, JugadorProtegido, CartaNoEncontrada {
-		Mesa mesa = new Mesa();
 		Jugador jugador1 = new Jugador("Wilson");
 		Jugador jugador2 = new Jugador("Marta");
-
-		mesa.agregarJugador(jugador1);
-		mesa.agregarJugador(jugador2);
 
 		Guardia guardia = new Guardia();
 		Mucama mucama = new Mucama();
@@ -49,17 +46,15 @@ public class GuardiaTest {
 		jugador1.tomarCarta(guardia);
 		jugador2.tomarCarta(mucama);
 
-		assertFalse(mesa.nombrarCarta(jugador2, principe));
+		boolean esAdivinado = guardia.descartar(jugador2, EnumerationCarta.Principe);
+		
+		assertFalse(esAdivinado);
 	}
 
 	@Test(expected=CartaNoValida.class)
 	public void guardiaNoPermiteAdivinarGuardia() throws CartaNoValida, JugadorProtegido, CartaNoEncontrada {
-		Mesa mesa = new Mesa();
 		Jugador jugador1 = new Jugador("Wilson");
 		Jugador jugador2 = new Jugador("Marta");
-
-		mesa.agregarJugador(jugador1);
-		mesa.agregarJugador(jugador2);
 
 		Guardia guardia1 = new Guardia();
 		Guardia guardia2 = new Guardia();
@@ -67,18 +62,14 @@ public class GuardiaTest {
 		jugador1.tomarCarta(guardia1);
 		jugador2.tomarCarta(guardia2);
 
-		mesa.nombrarCarta(jugador2, guardia2);
+		guardia1.descartar(jugador2, EnumerationCarta.Guardia);
 	}
 	
 	@Test(expected=JugadorProtegido.class)
 	public void guardiaNoPermiteAdivinarEnJugadorProtegido() throws CartaNoValida, JugadorProtegido, CartaNoEncontrada {
-		Mesa mesa = new Mesa();
 		Jugador jugador1 = new Jugador("Wilson");
 		Jugador jugador2 = new Jugador("Marta");
 		jugador2.proteger();
-
-		mesa.agregarJugador(jugador1);
-		mesa.agregarJugador(jugador2);
 
 		Guardia guardia1 = new Guardia();
 		Principe principe = new Principe();
@@ -86,6 +77,6 @@ public class GuardiaTest {
 		jugador1.tomarCarta(guardia1);
 		jugador2.tomarCarta(principe);
 
-		mesa.nombrarCarta(jugador2, principe);
+		guardia1.descartar(jugador2, EnumerationCarta.Principe);
 	}
 }
