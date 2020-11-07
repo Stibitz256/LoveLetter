@@ -138,6 +138,21 @@ public class Jugador implements Comparable<Jugador> {
 		return carta;
 	}
 
+	public Carta eliminarUltimaCartaDescartada() throws CartaNoEncontrada {
+		if (this.cartasDescartadas.isEmpty()) {
+			throw new CartaNoEncontrada();
+		}
+
+		Iterator<Carta> cartasDescartadas = this.cartasDescartadas.iterator();
+		Carta carta = null;
+		while (cartasDescartadas.hasNext()) {
+			carta = cartasDescartadas.next();
+		}
+		this.cartasDescartadas.remove(carta);
+
+		return carta;
+	}
+
 	@Override
 	public String toString() {
 		return "Jugador [nombre=" + nombre + ", protegido=" + protegido + ", eliminado=" + eliminado + ", rendido="
