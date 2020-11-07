@@ -33,7 +33,7 @@ public class BaronTest {
 		jugador1.tomarCarta(principe);
 		jugador2.tomarCarta(mucama);
 
-		Carta carta = baron.descartar(jugador1, jugador2);
+		Carta carta = baron.descartar(jugador2, jugador1);
 		assertEquals(principe, carta);
 		assertTrue(jugador2.estaEliminado());
 	}
@@ -50,7 +50,7 @@ public class BaronTest {
 		jugador1.tomarCarta(mucama);
 		jugador2.tomarCarta(principe);
 		
-		Carta carta = baron.descartar(jugador1, jugador2);
+		Carta carta = baron.descartar(jugador2, jugador1);
 		assertEquals(principe, carta);
 		assertTrue(jugador1.estaEliminado());
 	}
@@ -67,7 +67,7 @@ public class BaronTest {
 		jugador1.tomarCarta(principe);
 		jugador2.tomarCarta(principe2);
 
-		Carta carta = baron.descartar(jugador1, jugador2);
+		Carta carta = baron.descartar(jugador2, jugador1);
 		assertNull(carta);
 		
 		assertFalse(jugador1.estaEliminado());
@@ -86,6 +86,6 @@ public class BaronTest {
 		jugador1.tomarCarta(mucama);
 		jugador2.tomarCarta(principe);
 		
-		baron.descartar(jugador1, jugador2);
+		baron.descartar(jugador2, jugador1);
 	}
 }
