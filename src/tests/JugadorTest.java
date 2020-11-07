@@ -11,6 +11,7 @@ public class JugadorTest {
 	@Test
 	public void test() {
 		Jugador jugador = new Jugador("Cacho");
+		assertEquals(new Jugador("").getClass(), jugador);
 	}
 
 }
