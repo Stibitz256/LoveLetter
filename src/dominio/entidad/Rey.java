@@ -36,6 +36,6 @@ public class Rey extends Carta {
 		jugador.tomarCarta(cartaTurno);
 		jugadorTurno.tomarCarta(cartaJugador);
 
-		return null;
+		return cartaJugador;
 	}
 }
