@@ -10,5 +10,4 @@ public class MazoTest {
 	public void test() {
 		fail("Not yet implemented");
 	}
-
 }

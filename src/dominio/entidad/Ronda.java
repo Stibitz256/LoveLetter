@@ -9,10 +9,10 @@ public class Ronda {
 	private Mazo mazo;
 	private Carta cartaApartada;
 	private Jugador turno;
-	Iterator<Jugador> jugadores;
+	TreeSet<Jugador> jugadores;
 
 	public Ronda(TreeSet<Jugador> jugadores) {
-		this.jugadores = jugadores.iterator();
+		this.jugadores = jugadores;
 		turno = jugadores.first();
 		this.mazo = new Mazo();
 	}
@@ -28,7 +28,7 @@ public class Ronda {
 	}
 
 	public void repartirMazo() throws CartaNoEncontrada {
-		Iterator<Jugador> jugadores = this.jugadores;
+		Iterator<Jugador> jugadores = this.jugadores.iterator();
 		this.cartaApartada = this.mazo.obtenerCarta();
 		while (jugadores.hasNext()) {
 			Jugador jugador = jugadores.next();
@@ -37,31 +37,36 @@ public class Ronda {
 	}
 
 	public Jugador siguienteJugadorEnLaRonda() {
-		Iterator<Jugador> principio = this.jugadores;
-		Iterator<Jugador> jugadores = this.jugadores;
-		boolean iterador = true;
-
+		Iterator<Jugador> jugadores = this.jugadores.iterator();
 		Jugador actual = jugadores.next();
-		while (actual != this.turno) {
+		Jugador ultimoJugador = this.jugadores.last();
+		boolean seguir = true;
+
+		while (jugadores.hasNext() && actual != turno) {
 			actual = jugadores.next();
 		}
 
-		while (iterador) {
-			if (!jugadores.hasNext()) {
-				jugadores = principio;
-			}
-			Jugador jugador = jugadores.next();
-			if (!jugador.estaEliminado()) {
-				actual = jugador;
-				iterador = false;
-			}
+		if (jugadores.hasNext()) {
+			actual = jugadores.next();
+		} else {
+			jugadores = this.jugadores.iterator();
+			actual = jugadores.next();
 		}
 
+		while (seguir && jugadores.hasNext()) {
+			if(actual.estaEliminado() || actual.estaRendido())
+				actual = jugadores.next();
+			else {
+				seguir = false;
+			}
+		}
+		actual.desproteger();
+		this.turno = actual;
 		return actual;
 	}
 
 	public Jugador compararFuerzasYDescartes() {
-		Iterator<Jugador> jugadores = this.jugadores;
+		Iterator<Jugador> jugadores = this.jugadores.iterator();
 		Jugador ganador = jugadores.next();
 
 		while (jugadores.hasNext() && ganador.estaEliminado()) {
