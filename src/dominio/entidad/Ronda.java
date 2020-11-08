@@ -39,51 +39,51 @@ public class Ronda {
 	public Jugador siguienteJugadorEnLaRonda() {
 		Iterator<Jugador> jugadores = this.jugadores.iterator();
 		Jugador actual = jugadores.next();
-		Jugador ultimoJugador = this.jugadores.last();
 		boolean seguir = true;
 
 		while (jugadores.hasNext() && actual != turno) {
 			actual = jugadores.next();
 		}
 
-		if (jugadores.hasNext()) {
-			actual = jugadores.next();
-		} else {
+		if (!jugadores.hasNext()) {
 			jugadores = this.jugadores.iterator();
-			actual = jugadores.next();
 		}
 
 		while (seguir && jugadores.hasNext()) {
-			if(actual.estaEliminado() || actual.estaRendido())
-				actual = jugadores.next();
-			else {
+			actual = jugadores.next();
+			if(!actual.estaEliminado() && !actual.estaRendido()) {
 				seguir = false;
 			}
+			if(!jugadores.hasNext()) {
+				jugadores = this.jugadores.iterator();
+			}
 		}
+		
 		actual.desproteger();
 		this.turno = actual;
+		
 		return actual;
 	}
 
 	public Jugador compararFuerzasYDescartes() {
 		Iterator<Jugador> jugadores = this.jugadores.iterator();
 		Jugador ganador = jugadores.next();
-
-		while (jugadores.hasNext() && ganador.estaEliminado()) {
+		boolean seguir = true;
+		
+		while (jugadores.hasNext() && (ganador.estaEliminado() || ganador.estaRendido())) {
 			ganador = jugadores.next();
 		}
-		while (jugadores.hasNext()) {
-			Jugador jugador = jugadores.next();
-			if (!jugador.estaEliminado()) {
+		
+		while (seguir && jugadores.hasNext()) {
+			Jugador otroJugador = jugadores.next();
+			if(!otroJugador.estaEliminado() && !otroJugador.estaRendido()) {
+				seguir = false;
 
-				int comp = jugador.obtenerFuerza() - ganador.obtenerFuerza();
+				int comp = otroJugador.obtenerFuerza() - ganador.obtenerFuerza();
 				if (comp > 0) {
-					ganador = jugador;
-				} else {
-					if (comp == 0) {
-						if (jugador.obtenerCantCartasDescartadas() > ganador.obtenerCantCartasDescartadas())
-							ganador = jugador;
-					}
+					ganador = otroJugador;
+				} else if(comp == 0 && otroJugador.obtenerCantCartasDescartadas() > ganador.obtenerCantCartasDescartadas()) { 
+					ganador = otroJugador;
 				}
 			}
 		}

@@ -13,6 +13,8 @@ public class Jugador implements Comparable<Jugador> {
 	int simbolosAfectos;
 	LinkedHashSet<Carta> cartasDescartadas;
 	LinkedHashSet<Carta> cartasMano;
+	private static int posicion = 0;
+	private int miPosicion = 0;
 
 	public Jugador(String nombre) {
 		this.nombre = nombre;
@@ -22,6 +24,8 @@ public class Jugador implements Comparable<Jugador> {
 		this.simbolosAfectos = 0;
 		this.cartasMano = new LinkedHashSet<Carta>();
 		this.cartasDescartadas = new LinkedHashSet<Carta>();
+		this.posicion++;
+		miPosicion = this.posicion;
 	}
 
 	public int obtenerFuerza() {
@@ -44,6 +48,7 @@ public class Jugador implements Comparable<Jugador> {
 		int cant = 0;
 		Iterator<Carta> listaCartas = this.cartasDescartadas.iterator();
 		while (listaCartas.hasNext()) {
+			listaCartas.next();
 			cant++;
 		}
 
@@ -152,6 +157,10 @@ public class Jugador implements Comparable<Jugador> {
 
 		return carta;
 	}
+	
+	public int obtenerPosicion() {
+		return this.miPosicion;
+	}
 
 	@Override
 	public String toString() {
@@ -162,6 +171,6 @@ public class Jugador implements Comparable<Jugador> {
 
 	@Override
 	public int compareTo(Jugador otroJugador) {
-		return 0;
+		return this.obtenerPosicion() - otroJugador.obtenerPosicion();
 	}
 }

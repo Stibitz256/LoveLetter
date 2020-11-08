@@ -18,7 +18,7 @@ import dominio.excepcion.CartaNoValida;
 public class MucamaTest {
 
 	@Test
-	public void test() throws CartaNoValida, CartaNoEncontrada {
+	public void mucamaSeDesprotegeEnSuNuevoTurno() throws CartaNoValida, CartaNoEncontrada {
 		TreeSet<Jugador> jugadores = new TreeSet<Jugador>();
 		Jugador jugador1 = new Jugador("Carlos");
 		Jugador jugador2 = new Jugador("Jhon");
@@ -44,7 +44,7 @@ public class MucamaTest {
 	}
 
 	@Test
-	public void test2() throws CartaNoValida, CartaNoEncontrada {
+	public void mucamaNoSeDesprotegeSiAunNoEsSuSiguienteTurno() throws CartaNoValida, CartaNoEncontrada {
 		TreeSet<Jugador> jugadores = new TreeSet<Jugador>();
 		Jugador jugador1 = new Jugador("Carlos");
 		Jugador jugador2 = new Jugador("Jhon");
