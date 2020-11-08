@@ -11,7 +11,6 @@ import java.net.Socket;
 import com.google.gson.Gson;
 
 import dominio.entidad.EnumerationCarta;
-import paquete.PaqueteCarta;
 import paquete.PaqueteMesa;
 
 public class ConexionServidor implements MouseListener {

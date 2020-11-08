@@ -2,7 +2,7 @@ package paquete;
 
 public class Paquete {
 
-	String comando;
+	protected String comando;
 	
 	public Paquete() {
 		

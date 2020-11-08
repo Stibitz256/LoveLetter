@@ -39,7 +39,6 @@ public class Mesa extends JPanel {
 		
 	}
 
-
 	public synchronized void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		setBackground(new Color(52, 108, 108));
