@@ -16,6 +16,10 @@ public class Ronda {
 		turno = jugadores.first();
 		this.mazo = new Mazo();
 	}
+	
+	public Jugador jugadorTurno() {
+		return this.turno;
+	}
 
 	public Jugador ganadorRonda() {
 		this.turno.incrementarSimbolosDeAfecto();

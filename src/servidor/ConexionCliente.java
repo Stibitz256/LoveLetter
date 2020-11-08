@@ -22,8 +22,14 @@ import javax.swing.Timer;
 import com.google.gson.Gson;
 
 import cliente.Mesa;
+import comandos.Comando;
+import dominio.entidad.EnumerationCarta;
 import dominio.entidad.Jugador;
 import dominio.entidad.Mazo;
+import dominio.entidad.Partida;
+import dominio.entidad.Ronda;
+import dominio.excepcion.CartaNoEncontrada;
+import paquete.PaqueteCarta;
 import paquete.PaqueteMesa;
 
 public class ConexionCliente extends Thread implements Observer {
@@ -34,16 +40,24 @@ public class ConexionCliente extends Thread implements Observer {
 	private Gson gson;
 	private boolean conectado;
 
-	public ConexionCliente(Socket socket, Mensaje mensajes) {
+	public ConexionCliente(Socket socket, Mensaje mensajes) throws CartaNoEncontrada {
 		try {
 			this.mensaje = mensajes;
 			this.socket = socket;
 			this.entradaDatos = new DataInputStream(socket.getInputStream());
 			this.salidaDatos = new DataOutputStream(socket.getOutputStream());
 			gson = new Gson();
-
-			salidaDatos.writeUTF(
-					gson.toJson(new PaqueteMesa("3", new TreeSet<Jugador>(), new Mazo(), new Jugador("asd"))));
+			
+			// comenzar partida directa
+			TreeSet<Jugador> jugadores = new TreeSet<Jugador>();
+			jugadores.add(new Jugador("Player1"));
+			Partida partida = new Partida(jugadores, 3);
+			Ronda ronda = partida.inicializarPartida();
+			ronda.repartirMazo();
+			Jugador jugadorTurno = ronda.jugadorTurno();
+			EnumerationCarta carta = EnumerationCarta.valueOf(jugadorTurno.obtenerPrimeraCartaDeLaMano().getNombre());
+			
+			salidaDatos.writeUTF(gson.toJson(new PaqueteCarta(Comando.MESA, carta)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -59,7 +73,7 @@ public class ConexionCliente extends Thread implements Observer {
 			try {
 				mensajeRecibido = entradaDatos.readUTF();
 				System.out.println("MENSAJE RECIBIDO SERVER: " + mensajeRecibido.toString());
-				PaqueteMesa mesa = gson.fromJson(mensajeRecibido, PaqueteMesa.class);
+				PaqueteCarta carta = gson.fromJson(mensajeRecibido, PaqueteCarta.class);
 				// accion
 				refrescar();
 			} catch (IOException e) {
@@ -80,8 +94,9 @@ public class ConexionCliente extends Thread implements Observer {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mensaje.setMensaje(
-						gson.toJson(new PaqueteMesa("2", new TreeSet<Jugador>(), new Mazo(), new Jugador("juancho"))));
+				System.out.println(e);
+				/*mensaje.setMensaje(
+						gson.toJson(new PaqueteCarta(Comando.MESA, );*/
 			}
 		});
 

@@ -19,6 +19,10 @@ public class Partida {
 		return "Partida [jugadores=" + jugadores + ", cantSimbolosDeAfectoNecesarios=" + cantSimbolosDeAfectoNecesarios
 				+ "]";
 	}
+	
+	public Ronda inicializarPartida() {
+		return this.ronda;
+	}
 
 	public Ronda siguienteRonda() {
 		if (this.ganadorPartida().obtenerSimbolosAfectos() < this.cantSimbolosDeAfectoNecesarios) {

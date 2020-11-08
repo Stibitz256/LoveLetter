@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import dominio.entidad.EnumerationCarta;
+import paquete.PaqueteCarta;
 import paquete.PaqueteMesa;
 
 public class Juego extends JFrame {
@@ -24,6 +26,7 @@ public class Juego extends JFrame {
 	private DataInputStream entradaDatos;
 	static final int ALTO = 1200;
 	static final int ANCHO = 800;
+	private ConexionServidor conexion;
 
 	public Juego() throws IOException {
 		super("LoveLetter");
@@ -44,13 +47,14 @@ public class Juego extends JFrame {
 		try {
 			socket = new Socket(host, puerto);
 			entradaDatos = new DataInputStream(socket.getInputStream());
+			System.out.println("PaqueCartaCliente");
 			System.out.println(entradaDatos.readUTF().toString());
-			System.out.println("PaqueMesaCliente");
-//            PaqueteMesa paquete = gson.fromJson(entradaDatos.readUTF(), PaqueteMesa.class);
-//            System.out.println("PaqueMesaCliente: " + paquete.getMazo().toString());
-//            contentPane.setMazo(paquete.getMazo());
-//            System.out.println(paquete.getJugadores().toString());
-//            contentPane.setJugadores(paquete.getJugadores());
+//			PaqueteCarta paquete = gson.fromJson(entradaDatos.readUTF(), PaqueteCarta.class);
+            //contentPane.addCarta(paquete.getCarta());
+			this.conexion = new ConexionServidor(socket, host);
+//			this.conexion.addCarta(paquete.getCarta());
+			this.conexion.addCarta(EnumerationCarta.Guardia);
+			this.addMouseListener(this.conexion);
 		} catch (UnknownHostException e) {
 			System.out.println("error: " + e);
 			e.printStackTrace();
@@ -60,8 +64,6 @@ public class Juego extends JFrame {
 		} catch (Exception e) {
 			System.out.println("error: " + e);
 		}
-
-		this.addMouseListener(new ConexionServidor(socket, host));
 	}
 
 	public synchronized void recibirMensajeServidor() {

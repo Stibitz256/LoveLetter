@@ -7,10 +7,15 @@ import java.awt.event.MouseListener;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.LinkedList;
 
 import com.google.gson.Gson;
 
+import comandos.Comando;
+import dominio.entidad.Carta;
 import dominio.entidad.EnumerationCarta;
+import dominio.entidad.Mazo;
+import paquete.PaqueteCarta;
 import paquete.PaqueteMesa;
 
 public class ConexionServidor implements MouseListener {
@@ -18,6 +23,8 @@ public class ConexionServidor implements MouseListener {
     private String usuario;
     private DataOutputStream salidaDatos;
 	private Gson gson;
+	private Mazo mazo;
+	private EnumerationCarta carta;
 
     public ConexionServidor(Socket socket, String usuario) {
 		this.socket = socket;
@@ -31,12 +38,26 @@ public class ConexionServidor implements MouseListener {
         }
     }
     
+    public void setMazo(Mazo mazo) {
+    	this.mazo = mazo;
+    }
+    
+    public void addCarta(EnumerationCarta carta) {
+    	this.carta = carta;
+    }
+    
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(e.getY() >= 800-300 && e.getY() <=800-300+270) {
 			System.out.println(e.getX());
 			if(e.getX() >= 1200/2-200 && e.getX() <= 1200/2) {
 				System.out.println("CARTA 1 DESCARTAR");
+				try {
+					this.salidaDatos.writeUTF(gson.toJson(new PaqueteCarta(Comando.JUGAR, this.carta), PaqueteCarta.class));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			} else if(e.getX() >= 1200/2+30 && e.getX() <=1200/2+200+30*2) {
 				System.out.println("CARTA 2 DESCARTAR");
 			}

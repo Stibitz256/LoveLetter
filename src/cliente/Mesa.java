@@ -13,6 +13,8 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import dominio.entidad.Carta;
+import dominio.entidad.EnumerationCarta;
 import dominio.entidad.Jugador;
 import dominio.entidad.Mazo;
 
@@ -22,6 +24,7 @@ public class Mesa extends JPanel {
 	private final BufferedImage mazo;
 	private final BufferedImage mesa;
 	private BufferedImage[] cartas;
+	private EnumerationCarta carta;
 
 	public Mesa() throws IOException {
 		mazo = ImageIO.read(new File("./img/cartas/back.png"));
@@ -37,6 +40,10 @@ public class Mesa extends JPanel {
 	
 	public void setJugadores(TreeSet<Jugador> jugadores) {
 		
+	}
+	
+	public void addCarta(EnumerationCarta carta) {
+		this.carta = carta;
 	}
 
 	public synchronized void paintComponent(Graphics g) {

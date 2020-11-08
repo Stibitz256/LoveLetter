@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import cliente.Mesa;
+import dominio.excepcion.CartaNoEncontrada;
 
 
 public class Juego {
@@ -13,7 +14,7 @@ public class Juego {
 	private static Mesa mesa;
 	private static ServerSocket servidor = null;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws CartaNoEncontrada {
 		Socket socket = null;
 		Mensaje mensajes = new Mensaje();
 		

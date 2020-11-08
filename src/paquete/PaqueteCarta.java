@@ -2,15 +2,24 @@ package paquete;
 
 import dominio.entidad.EnumerationCarta;
 
-public class PaqueteCarta extends Paquete {
+public class PaqueteCarta {
+	protected String comando;
 	private EnumerationCarta carta;
 	
 	public PaqueteCarta(String comando, EnumerationCarta carta) {
-		super(comando);
+		this.comando = comando;
 		this.carta = carta;
 	}
 
 	public EnumerationCarta getCarta() {
 		return carta;
+	}
+	
+	public String getComando() {
+		return comando;
+	}
+
+	public void setComando(String comando) {
+		this.comando = comando;
 	}
 }
