@@ -47,5 +47,9 @@ public class Mazo {
 
 		return carta;
 	}
+	
+	public int obtenerCantidadDeCartas() {
+		return cartas.size();
+	}
 
 }
