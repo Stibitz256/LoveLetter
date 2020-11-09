@@ -16,7 +16,7 @@ public class Ronda {
 		turno = jugadores.first();
 		this.mazo = new Mazo();
 	}
-	
+
 	public Jugador jugadorTurno() {
 		return this.turno;
 	}
@@ -31,13 +31,22 @@ public class Ronda {
 		return this.ganadorRonda();
 	}
 
-	public void repartirMazo() throws CartaNoEncontrada {
+	public Mazo repartirMazo() throws CartaNoEncontrada {
 		Iterator<Jugador> jugadores = this.jugadores.iterator();
 		this.cartaApartada = this.mazo.obtenerCarta();
 		while (jugadores.hasNext()) {
 			Jugador jugador = jugadores.next();
 			jugador.tomarCarta(this.mazo.obtenerCarta());
 		}
+
+		return this.mazo;
+	}
+
+	public Carta darCartaJugadorTurno() throws CartaNoEncontrada {
+		Carta carta = this.mazo.obtenerCarta();
+		this.turno.tomarCarta(carta);
+
+		return carta;
 	}
 
 	public Jugador siguienteJugadorEnLaRonda() {
@@ -55,17 +64,17 @@ public class Ronda {
 
 		while (seguir && jugadores.hasNext()) {
 			actual = jugadores.next();
-			if(!actual.estaEliminado() && !actual.estaRendido()) {
+			if (!actual.estaEliminado() && !actual.estaRendido()) {
 				seguir = false;
 			}
-			if(!jugadores.hasNext()) {
+			if (!jugadores.hasNext()) {
 				jugadores = this.jugadores.iterator();
 			}
 		}
-		
+
 		actual.desproteger();
 		this.turno = actual;
-		
+
 		return actual;
 	}
 
@@ -73,20 +82,21 @@ public class Ronda {
 		Iterator<Jugador> jugadores = this.jugadores.iterator();
 		Jugador ganador = jugadores.next();
 		boolean seguir = true;
-		
+
 		while (jugadores.hasNext() && (ganador.estaEliminado() || ganador.estaRendido())) {
 			ganador = jugadores.next();
 		}
-		
+
 		while (seguir && jugadores.hasNext()) {
 			Jugador otroJugador = jugadores.next();
-			if(!otroJugador.estaEliminado() && !otroJugador.estaRendido()) {
+			if (!otroJugador.estaEliminado() && !otroJugador.estaRendido()) {
 				seguir = false;
 
 				int comp = otroJugador.obtenerFuerza() - ganador.obtenerFuerza();
 				if (comp > 0) {
 					ganador = otroJugador;
-				} else if(comp == 0 && otroJugador.obtenerCantCartasDescartadas() > ganador.obtenerCantCartasDescartadas()) { 
+				} else if (comp == 0
+						&& otroJugador.obtenerCantCartasDescartadas() > ganador.obtenerCantCartasDescartadas()) {
 					ganador = otroJugador;
 				}
 			}

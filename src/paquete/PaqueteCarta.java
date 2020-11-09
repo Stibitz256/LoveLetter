@@ -22,4 +22,9 @@ public class PaqueteCarta {
 	public void setComando(String comando) {
 		this.comando = comando;
 	}
+	
+	public void setCarta(EnumerationCarta carta) {
+		this.carta = carta;
+	}
+
 }

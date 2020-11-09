@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 
 import cliente.Mesa;
 import comandos.Comando;
+import dominio.entidad.Carta;
 import dominio.entidad.EnumerationCarta;
 import dominio.entidad.Jugador;
 import dominio.entidad.Mazo;
@@ -40,6 +41,13 @@ public class ConexionCliente extends Thread implements Observer {
 	private Gson gson;
 	private boolean conectado;
 
+	private Mazo mazo;
+	private Jugador jugadorTurno;
+	private Partida partida;
+	private Ronda ronda;
+	private TreeSet<Jugador> jugadores;
+	private Carta carta;
+
 	public ConexionCliente(Socket socket, Mensaje mensajes) throws CartaNoEncontrada {
 		try {
 			this.mensaje = mensajes;
@@ -47,16 +55,16 @@ public class ConexionCliente extends Thread implements Observer {
 			this.entradaDatos = new DataInputStream(socket.getInputStream());
 			this.salidaDatos = new DataOutputStream(socket.getOutputStream());
 			gson = new Gson();
-			
+
 			// comenzar partida directa
 			TreeSet<Jugador> jugadores = new TreeSet<Jugador>();
 			jugadores.add(new Jugador("Player1"));
-			Partida partida = new Partida(jugadores, 3);
-			Ronda ronda = partida.inicializarPartida();
+			partida = new Partida(jugadores, 3);
+			ronda = partida.inicializarPartida();
 			ronda.repartirMazo();
-			Jugador jugadorTurno = ronda.jugadorTurno();
+			jugadorTurno = ronda.jugadorTurno();
 			EnumerationCarta carta = EnumerationCarta.valueOf(jugadorTurno.obtenerPrimeraCartaDeLaMano().getNombre());
-			
+
 			salidaDatos.writeUTF(gson.toJson(new PaqueteCarta(Comando.MESA, carta)));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -73,7 +81,14 @@ public class ConexionCliente extends Thread implements Observer {
 			try {
 				mensajeRecibido = entradaDatos.readUTF();
 				System.out.println("MENSAJE RECIBIDO SERVER: " + mensajeRecibido.toString());
-				PaqueteCarta carta = gson.fromJson(mensajeRecibido, PaqueteCarta.class);
+				//PaqueteCarta carta = gson.fromJson(mensajeRecibido, PaqueteCarta.class);
+//				PaqueteCarta paqueteCarta = gson.fromJson(mensajeRecibido, PaqueteCarta.class);
+//				Carta carta = jugadorTurno.obtenerCartaMano(paqueteCarta.getCarta());
+				jugadorTurno.descartar();
+//				jugadorTurno.descartar(carta);
+				this.carta = ronda.darCartaJugadorTurno();
+				// salidaDatos.writeUTF(gson.toJson(new PaqueteCarta(Comando.MESA,
+				// EnumerationCarta.valueOf(carta.getNombre()))));
 				// accion
 				refrescar();
 			} catch (IOException e) {
@@ -85,6 +100,9 @@ public class ConexionCliente extends Thread implements Observer {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
+			} catch (CartaNoEncontrada e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}
@@ -95,8 +113,9 @@ public class ConexionCliente extends Thread implements Observer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(e);
-				/*mensaje.setMensaje(
-						gson.toJson(new PaqueteCarta(Comando.MESA, );*/
+				/*
+				 * mensaje.setMensaje( gson.toJson(new PaqueteCarta(Comando.MESA, );
+				 */
 			}
 		});
 
@@ -106,11 +125,12 @@ public class ConexionCliente extends Thread implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		try {
-			salidaDatos.writeUTF(arg.toString());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+			System.out.println("UPDATE"+ arg.toString());
+//			salidaDatos.writeUTF(arg.toString());
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 }

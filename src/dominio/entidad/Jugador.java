@@ -143,6 +143,19 @@ public class Jugador implements Comparable<Jugador> {
 		return carta;
 	}
 
+	public Carta obtenerCartaMano(EnumerationCarta cartaAObtener) {
+		Iterator<Carta> cartas = cartasMano.iterator();
+		while (cartas.hasNext()) {
+			Carta carta = cartas.next();
+			if (carta.getNombre().equals(cartaAObtener)) {
+				return carta;
+			}
+		}
+
+		return null;
+
+	}
+
 	public Carta eliminarUltimaCartaDescartada() throws CartaNoEncontrada {
 		if (this.cartasDescartadas.isEmpty()) {
 			throw new CartaNoEncontrada();
@@ -157,7 +170,7 @@ public class Jugador implements Comparable<Jugador> {
 
 		return carta;
 	}
-	
+
 	public int obtenerPosicion() {
 		return this.miPosicion;
 	}
