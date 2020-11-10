@@ -30,20 +30,25 @@ public class Mesa extends JPanel {
 		mazo = ImageIO.read(new File("./img/cartas/back.png"));
 		mesa = ImageIO.read(new File("./img/mesa/table.jpg"));
 		cartas = new BufferedImage[2];
-		cartas[0] = ImageIO.read(new File("./img/cartas/guard.png"));
-		cartas[1] = ImageIO.read(new File("./img/cartas/king.png"));
+		cartas[0] = ImageIO.read(new File("./img/cartas/back.png"));
+		cartas[1] = ImageIO.read(new File("./img/cartas/back.png"));
 	}
-	
+
 	public void setMazo(Mazo mazo) {
 		mazoTam = mazo.obtenerCantidadDeCartas();
 	}
-	
+
 	public void setJugadores(TreeSet<Jugador> jugadores) {
-		
+
+	}
+
+	public void addCarta(EnumerationCarta carta) throws IOException {
+		this.carta = carta;
+		cartas[0] = ImageIO.read(new File("./img/cartas/" + carta.name() + ".png"));
 	}
 	
-	public void addCarta(EnumerationCarta carta) {
-		this.carta = carta;
+	public EnumerationCarta getCarta() {
+		return this.carta;
 	}
 
 	public synchronized void paintComponent(Graphics g) {
@@ -80,5 +85,5 @@ public class Mesa extends JPanel {
 			width += 200 * cartas.length + 30 * cartas.length;
 		}
 	}
-	
+
 }

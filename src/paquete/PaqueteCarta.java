@@ -3,7 +3,7 @@ package paquete;
 import dominio.entidad.EnumerationCarta;
 
 public class PaqueteCarta {
-	protected String comando;
+	private String comando;
 	private EnumerationCarta carta;
 	
 	public PaqueteCarta(String comando, EnumerationCarta carta) {

@@ -81,14 +81,15 @@ public class ConexionCliente extends Thread implements Observer {
 			try {
 				mensajeRecibido = entradaDatos.readUTF();
 				System.out.println("MENSAJE RECIBIDO SERVER: " + mensajeRecibido.toString());
-				//PaqueteCarta carta = gson.fromJson(mensajeRecibido, PaqueteCarta.class);
-//				PaqueteCarta paqueteCarta = gson.fromJson(mensajeRecibido, PaqueteCarta.class);
-//				Carta carta = jugadorTurno.obtenerCartaMano(paqueteCarta.getCarta());
-				jugadorTurno.descartar();
-//				jugadorTurno.descartar(carta);
+
+				PaqueteCarta paqueteCarta = gson.fromJson(mensajeRecibido, PaqueteCarta.class);
+				Carta carta = jugadorTurno.obtenerCartaMano(paqueteCarta.getCarta());
+				jugadorTurno.descartar(carta);
 				this.carta = ronda.darCartaJugadorTurno();
-				// salidaDatos.writeUTF(gson.toJson(new PaqueteCarta(Comando.MESA,
-				// EnumerationCarta.valueOf(carta.getNombre()))));
+
+				EnumerationCarta cartaEnumeration = EnumerationCarta.valueOf(this.carta.getNombre());
+				salidaDatos.writeUTF(
+						gson.toJson(new PaqueteCarta(Comando.MESA, cartaEnumeration)));
 				// accion
 				refrescar();
 			} catch (IOException e) {
@@ -102,6 +103,9 @@ public class ConexionCliente extends Thread implements Observer {
 				}
 			} catch (CartaNoEncontrada e) {
 				// TODO Auto-generated catch block
+				
+				// FIN DE RONDA
+				
 				e.printStackTrace();
 			}
 		}
@@ -126,7 +130,7 @@ public class ConexionCliente extends Thread implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 //		try {
-			System.out.println("UPDATE"+ arg.toString());
+		System.out.println("UPDATE" + arg.toString());
 //			salidaDatos.writeUTF(arg.toString());
 //		} catch (IOException e) {
 //			e.printStackTrace();
