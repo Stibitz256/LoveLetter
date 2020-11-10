@@ -88,8 +88,7 @@ public class ConexionCliente extends Thread implements Observer {
 				this.carta = ronda.darCartaJugadorTurno();
 
 				EnumerationCarta cartaEnumeration = EnumerationCarta.valueOf(this.carta.getNombre());
-				salidaDatos.writeUTF(
-						gson.toJson(new PaqueteCarta(Comando.MESA, cartaEnumeration)));
+				salidaDatos.writeUTF(gson.toJson(new PaqueteCarta(Comando.MESA, cartaEnumeration)));
 				// accion
 				refrescar();
 			} catch (IOException e) {
@@ -103,9 +102,9 @@ public class ConexionCliente extends Thread implements Observer {
 				}
 			} catch (CartaNoEncontrada e) {
 				// TODO Auto-generated catch block
-				
+
 				// FIN DE RONDA
-				
+
 				e.printStackTrace();
 			}
 		}

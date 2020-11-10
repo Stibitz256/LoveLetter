@@ -31,37 +31,19 @@ public class Juego extends JFrame {
 
 		host = "localhost";
 		puerto = 59002;
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1200, 800);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setTitle("LoveLetter");
 		setSize(Juego.ALTO, Juego.ANCHO);
-		this.setVisible(true);
-		
-		try {
-			
-			mesa = new Mesa();
-			setContentPane(mesa);
-			this.conexion = new ConexionServidor(host, puerto, mesa);
-			this.addMouseListener(this.conexion);
-			
-		} catch (UnknownHostException e) {
-			
-			System.out.println("error: " + e);
-			e.printStackTrace();
-			
-		} catch (IOException e) {
-			
-			System.out.println("error: " + e);
-			e.printStackTrace();
-			
-		} catch (Exception e) {
-			
-			System.out.println("error: " + e);
-		}
+		setVisible(true);
 
+		mesa = new Mesa();
+		setContentPane(mesa);
+		this.conexion = new ConexionServidor(host, puerto, mesa);
+		this.addMouseListener(this.conexion);
 	}
 
 	public synchronized void recibirMensajeServidor() {
@@ -69,12 +51,10 @@ public class Juego extends JFrame {
 		boolean conectado = true;
 		while (conectado) {
 			try {
-				this.conexion.leer();
-				
+				conexion.leer();
 			} catch (IOException e) {
 				conectado = false;
 				System.out.println("conexion leer exception");
-				e.printStackTrace();
 			}
 		}
 	}

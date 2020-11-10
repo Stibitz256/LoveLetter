@@ -3,17 +3,14 @@ package cliente;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.TreeSet;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-import dominio.entidad.Carta;
 import dominio.entidad.EnumerationCarta;
 import dominio.entidad.Jugador;
 import dominio.entidad.Mazo;
@@ -23,15 +20,16 @@ public class Mesa extends JPanel {
 	private int mazoTam = 16;
 	private final BufferedImage mazo;
 	private final BufferedImage mesa;
-	private BufferedImage[] cartas;
-	private EnumerationCarta carta;
+	private BufferedImage[] cartasImagen;
+	private EnumerationCarta[] cartas;
 
 	public Mesa() throws IOException {
 		mazo = ImageIO.read(new File("./img/cartas/back.png"));
 		mesa = ImageIO.read(new File("./img/mesa/table.jpg"));
-		cartas = new BufferedImage[2];
-		cartas[0] = ImageIO.read(new File("./img/cartas/back.png"));
-		cartas[1] = ImageIO.read(new File("./img/cartas/back.png"));
+		cartasImagen = new BufferedImage[2];
+		cartasImagen[0] = ImageIO.read(new File("./img/cartas/back.png"));
+		cartasImagen[1] = ImageIO.read(new File("./img/cartas/back.png"));
+		this.cartas = new EnumerationCarta[2];
 	}
 
 	public void setMazo(Mazo mazo) {
@@ -42,13 +40,22 @@ public class Mesa extends JPanel {
 
 	}
 
-	public void addCarta(EnumerationCarta carta) throws IOException {
-		this.carta = carta;
-		cartas[0] = ImageIO.read(new File("./img/cartas/" + carta.name() + ".png"));
+	public void removerCarta(int numero) {
+		this.cartas[numero] = null;
 	}
-	
-	public EnumerationCarta getCarta() {
-		return this.carta;
+
+	public void addCarta(EnumerationCarta carta) throws IOException {
+		if (this.cartas[0] == null) {
+			this.cartas[0] = carta;
+			cartasImagen[0] = ImageIO.read(new File("./img/cartas/" + carta.name() + ".png"));
+		} else {
+			this.cartas[1] = carta;
+			cartasImagen[1] = ImageIO.read(new File("./img/cartas/" + carta.name() + ".png"));
+		}
+	}
+
+	public EnumerationCarta[] getCarta() {
+		return this.cartas;
 	}
 
 	public synchronized void paintComponent(Graphics g) {
@@ -79,10 +86,10 @@ public class Mesa extends JPanel {
 		Graphics2D g2 = (Graphics2D) g;
 		int width = this.getSize().width / 2;
 		int heigth = this.getSize().height - 300;
-		for (BufferedImage carta : cartas) {
+		for (BufferedImage carta : cartasImagen) {
 			width -= 200;
 			g2.drawImage(carta, width, heigth, 200, 270, null);
-			width += 200 * cartas.length + 30 * cartas.length;
+			width += 200 * cartasImagen.length + 30 * cartasImagen.length;
 		}
 	}
 
