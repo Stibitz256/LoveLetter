@@ -18,6 +18,7 @@ import comandos.Comando;
 import dominio.entidad.Carta;
 import dominio.entidad.EnumerationCarta;
 import dominio.entidad.Mazo;
+import paquete.Paquete;
 import paquete.PaqueteCarta;
 import paquete.PaqueteCartaDeserializer;
 import paquete.PaqueteMesa;
@@ -45,9 +46,17 @@ public class ConexionServidor implements MouseListener {
 	public void leer() throws IOException {
 		String mensaje = this.entradaDatos.readUTF();
 		System.out.println("leer: " + mensaje.toString());
+
 		PaqueteCarta paquete = gson.fromJson(mensaje, PaqueteCarta.class);
-		this.mesa.addCarta(paquete.getCarta());
-		this.mesa.repaint();
+		//////////////////////////////////////////////////////////////
+		if (paquete.getComando().equals("3")) {
+			this.mesa.cartelFinDeJuego();
+			this.mesa.repaint();
+		} else {
+			//////////////////////////////////////////////////////////////
+			this.mesa.addCarta(paquete.getCarta());
+			this.mesa.repaint();
+		}
 	}
 
 	@Override

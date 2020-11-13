@@ -22,7 +22,10 @@ public class Mesa extends JPanel {
 	private final BufferedImage mesa;
 	private BufferedImage[] cartasImagen;
 	private EnumerationCarta[] cartas;
+	///////////
+	private BufferedImage cartel;
 
+	///////////
 	public Mesa() throws IOException {
 		mazo = ImageIO.read(new File("./img/cartas/back.png"));
 		mesa = ImageIO.read(new File("./img/mesa/table.jpg"));
@@ -30,6 +33,7 @@ public class Mesa extends JPanel {
 		cartasImagen[0] = ImageIO.read(new File("./img/cartas/back.png"));
 		cartasImagen[1] = ImageIO.read(new File("./img/cartas/back.png"));
 		this.cartas = new EnumerationCarta[2];
+		cartel = null;
 	}
 
 	public void setMazo(Mazo mazo) {
@@ -58,6 +62,15 @@ public class Mesa extends JPanel {
 		return this.cartas;
 	}
 
+	////////////////////////////////////////////////////////////
+	public void cartelFinDeJuego() throws IOException {
+
+		this.cartel = ImageIO.read(new File("./img/carteles/findejuego.png"));
+
+	}
+
+	////////////////////////////////////////////////////////////
+
 	public synchronized void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		setBackground(new Color(52, 108, 108));
@@ -65,9 +78,21 @@ public class Mesa extends JPanel {
 		dibujarMesa(g);
 		dibujarMazo(g);
 		dibujarCartas(g);
+		////////////////
+		dibujarCartel(g);
+		//////////////
 
 	}
 
+	////////////////////////////////////////////////////////
+	private synchronized void dibujarCartel(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		if (cartel != null)
+			g2.drawImage(cartel, this.getSize().width / 2 - cartel.getWidth() / 2,
+					this.getSize().height / 2 - cartel.getHeight() / 2, cartel.getWidth(), cartel.getHeight(), null);
+	}
+
+	////////////////////////////////////////////////////////
 	private synchronized void dibujarMazo(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		int posX = this.getSize().width / 2 - mazo.getWidth() / 3 / 2;

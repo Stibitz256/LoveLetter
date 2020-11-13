@@ -101,9 +101,22 @@ public class ConexionCliente extends Thread implements Observer {
 					e1.printStackTrace();
 				}
 			} catch (CartaNoEncontrada e) {
-				// TODO Auto-generated catch block
-
 				// FIN DE RONDA
+
+				// deberia calcular el ganador y enviarselo solo a él, que puede no ser el del
+				// turno actual
+				//////////////////////////////////////////////////////////////////////////////////////////////////////
+					Jugador ganador = ronda.compararFuerzasYDescartes();
+					EnumerationCarta parasafar = EnumerationCarta.valueOf("Rey");
+					try {
+						salidaDatos.writeUTF(gson.toJson(new PaqueteCarta(Comando.FIN_DE_JUEGO, parasafar)));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					refrescar();
+				/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 				e.printStackTrace();
 			}
